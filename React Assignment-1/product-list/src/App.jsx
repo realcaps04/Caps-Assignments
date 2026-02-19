@@ -68,11 +68,22 @@ const PRODUCTS_DATA = [
   },
 ];
 
+// Toast Component
+const Toast = ({ message, onClose }) => {
+  return (
+    <div className="toast toast-success" onClick={onClose}>
+      <span style={{ fontSize: '1.2rem' }}>✅</span>
+      {message}
+    </div>
+  );
+};
+
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortOption, setSortOption] = useState('default');
   const [cartCount, setCartCount] = useState(0);
+  const [toasts, setToasts] = useState([]);
 
   // Extract unique categories for the filter dropdown
   const categories = useMemo(() => {
@@ -101,7 +112,19 @@ function App() {
   const addToCart = (productName) => {
     console.log(`Added to cart: ${productName}`);
     setCartCount((prev) => prev + 1);
-    alert(`${productName} added to cart! Check console.`);
+
+    // Add Toast
+    const id = Date.now();
+    setToasts((prev) => [...prev, { id, message: `${productName} added to cart!` }]);
+
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 3000);
+  };
+
+  const removeToast = (id) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
   return (
@@ -181,12 +204,24 @@ function App() {
               </div>
             ))
           ) : (
-            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '2rem' }}>
+            <div className="no-results">
               <h3>No products found matching your search.</h3>
+              <p>Try adjusting your search or filters.</p>
             </div>
           )}
         </section>
       </main>
+
+      {/* Toast Container */}
+      <div className="toast-container">
+        {toasts.map((toast) => (
+          <Toast
+            key={toast.id}
+            message={toast.message}
+            onClose={() => removeToast(toast.id)}
+          />
+        ))}
+      </div>
     </>
   );
 }
