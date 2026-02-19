@@ -24,7 +24,7 @@ const PRODUCTS_DATA = [
     price: 8999,
     category: 'Furniture',
     rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1596162955024-873d122e2ad9?auto=format&fit=crop&q=80&w=200&h=200',
+    image: 'https://images.unsplash.com/photo-1519947486511-461309963f86?auto=format&fit=crop&q=80&w=300&h=300',
   },
   {
     id: 4,
