@@ -154,18 +154,22 @@ function App() {
           {processedProducts.length > 0 ? (
             processedProducts.map((product) => (
               <div key={product.id} className="product-card">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="product-image"
-                  loading="lazy"
-                />
+                <div className="product-image-container">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="product-image"
+                    loading="lazy"
+                  />
+                </div>
                 <div className="product-info">
                   <span className="product-category">{product.category}</span>
                   <h3 className="product-name">{product.name}</h3>
                   <div className="product-meta">
                     <span className="product-price">₹{product.price.toLocaleString('en-IN')}</span>
-                    <span className="product-rating">★ {product.rating}</span>
+                    <div className="product-rating">
+                      <span>★</span> {product.rating}
+                    </div>
                   </div>
                   <button
                     className="add-to-cart-btn"
